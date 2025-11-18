@@ -19,6 +19,16 @@ Catálogo de produtos com carrinho simulado, construído em **HTML, CSS e JavaSc
 > Dica: Você pode abrir direto o `index.html` no navegador, mas algumas APIs funcionam melhor com servidor local.
 
 ## Publicar no GitHub Pages
+Opção A — automático (recomendado)
+
+Este repositório já inclui um workflow de **GitHub Actions** em `.github/workflows/deploy-pages.yml` que publica seu site no Pages a cada push na `main`.
+
+Passos:
+- Garanta que a branch seja `main` e faça o push.
+- Aguarde ~1–2 minutos: o job “Deploy to GitHub Pages” vai rodar.
+- O site ficará disponível em: `https://SelmaMonteiro.github.io/Mini-E-Commerce/`.
+
+Opção B — manual
 1. Crie um repositório e envie os arquivos (`index.html`, `styles.css`, `app.js`, `README.md`).
 2. Em `Settings` → `Pages`, selecione a branch `main` e a origem `/(root)`.
 3. Salve; a página ficará disponível em `https://seuusuario.github.io/seu-repo/`.
