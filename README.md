@@ -10,6 +10,8 @@ Catálogo de produtos com carrinho simulado, construído em **HTML, CSS e JavaSc
 - Layout moderno, responsivo e acessível (ARIA, `aria-live`, contraste)
 - Tema claro/escuro com toggle e respeito ao `prefers-color-scheme`
 - Microinterações: animações suaves em botões/cards, toast com slide e badge do carrinho
+- Opções de pagamento simuladas: Pix (chave com copiar) e Cartão (formulário)
+- Contato via WhatsApp: botão flutuante (FAB) e atalho no carrinho
 
 ## Executar localmente
 1. Baixe/clique em "Code" → "Download ZIP" ou clone este repositório.
@@ -22,6 +24,10 @@ Catálogo de produtos com carrinho simulado, construído em **HTML, CSS e JavaSc
 
 ## Publicar no GitHub Pages
 Opção A — automático (recomendado)
+
+## Configurações de negócio
+- WhatsApp: edite `WHATS_NUMBER` em `app.js` para seu número (somente dígitos, com DDI. Ex.: `55DDDNUMERO`).
+- Pix: edite `PIX_KEY` em `app.js` com sua chave (e-mail, CPF/CNPJ, chave aleatória).
 
 Este repositório já inclui um workflow de **GitHub Actions** em `.github/workflows/deploy-pages.yml` que publica seu site no Pages a cada push na `main`.
 

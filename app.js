@@ -246,7 +246,9 @@ function updateCartUI() {
   cartSubtotal.textContent = formatBRL(subtotal);
   cartFrete.textContent = formatBRL(frete);
   cartTotal.textContent = formatBRL(total);
-  cartCount.textContent = items.reduce((acc, it) => acc + it.qty, 0);
+  const qtyTotal = items.reduce((acc, it) => acc + it.qty, 0);
+  cartCount.textContent = qtyTotal;
+  cartButton.setAttribute("aria-label", `Abrir carrinho, ${qtyTotal} itens`);
   checkoutBtn.disabled = items.length === 0;
 }
 

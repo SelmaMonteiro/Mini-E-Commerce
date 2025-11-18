@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mini E-commerce</title>
     <meta name="description" content="Catálogo de produtos com carrinho simulado" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -65,16 +66,84 @@
             <span>Total</span>
             <strong id="cartTotal">R$ 0,00</strong>
           </div>
+          <div class="pay-actions">
+            <button id="payPixBtn" class="btn method" aria-label="Pagar com Pix">PIX</button>
+            <button id="payCardBtn" class="btn method" aria-label="Pagar com Cartão">Cartão</button>
+            <button id="whatsCartBtn" class="btn method" aria-label="Conversar no WhatsApp">WhatsApp</button>
+          </div>
           <button id="checkoutBtn" class="primary" disabled>Finalizar compra (simulado)</button>
           <p class="hint">Pagamento por Pix e cartão · Entrega rápida · Devolução fácil</p>
         </div>
       </div>
     </aside>
 
+    <!-- Modais de pagamento -->
+    <div id="payOverlay" class="overlay" hidden></div>
+    <section id="pixModal" class="modal" aria-hidden="true" aria-label="Pagamento via Pix">
+      <header class="modal-header">
+        <h3>Pagamento via Pix (simulado)</h3>
+        <button class="icon-btn" id="closePixModal" aria-label="Fechar">✖</button>
+      </header>
+      <div class="modal-body">
+        <p>Use a chave Pix abaixo para simular o pagamento:</p>
+        <div class="pix-key">
+          <code id="pixKeyText">chavepix@exemplo.com</code>
+          <button id="copyPixKey" class="btn">Copiar chave</button>
+        </div>
+        <p class="hint">Integração real pode usar QR Code e API do seu gateway.</p>
+      </div>
+    </section>
+
+    <section id="cardModal" class="modal" aria-hidden="true" aria-label="Pagamento via Cartão">
+      <header class="modal-header">
+        <h3>Pagamento via Cartão (simulado)</h3>
+        <button class="icon-btn" id="closeCardModal" aria-label="Fechar">✖</button>
+      </header>
+      <div class="modal-body">
+        <form class="card-form" onsubmit="return false">
+          <label>
+            Número do cartão
+            <input type="text" id="cardNumber" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" />
+          </label>
+          <div class="row">
+            <label>
+              Validade
+              <input type="text" id="cardExpiry" inputmode="numeric" placeholder="MM/AA" maxlength="5" />
+            </label>
+            <label>
+              CVC
+              <input type="text" id="cardCvc" inputmode="numeric" placeholder="123" maxlength="4" />
+            </label>
+          </div>
+          <button id="simulateCardPay" class="primary">Pagar (simulado)</button>
+          <p class="hint">Integração real via gateway (ex.: Mercado Pago, Pagar.me).</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Botão flutuante WhatsApp -->
+    <button id="whatsFab" class="fab fab-whats" aria-label="Conversar no WhatsApp">💬</button>
+
     <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
 
     <footer class="footer">
-      <small>© 2025 Mini E-commerce · Construído com HTML, CSS e JavaScript</small>
+      <div class="footer-top">
+        <div>
+          <strong>Mini E-commerce</strong>
+          <p class="muted">Catálogo com carrinho simulado e UI moderna.</p>
+        </div>
+        <nav class="footer-links" aria-label="Links">
+          <a href="https://github.com/SelmaMonteiro/Mini-E-Commerce" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://wa.me/5511995002425" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="#" aria-disabled="true">Termos</a>
+          <a href="#" aria-disabled="true">Privacidade</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <small>© 2025 Mini E-commerce · HTML, CSS e JavaScript</small>
+        <address class="address">Rua Feliz, 123 — V. Alegre · SP/SP · 00000000</address>
+        <small class="cnpj">CNPJ: 000000000000</small>
+      </div>
     </footer>
 
     <script src="app.js"></script>
