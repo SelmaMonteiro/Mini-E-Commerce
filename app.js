@@ -41,6 +41,24 @@ const cartFrete = bySel("cartFrete");
 const cartTotal = bySel("cartTotal");
 const checkoutBtn = bySel("checkoutBtn");
 const toast = bySel("toast");
+// Pagamentos e WhatsApp
+const payPixBtn = bySel("payPixBtn");
+const payCardBtn = bySel("payCardBtn");
+const whatsCartBtn = bySel("whatsCartBtn");
+const payOverlay = bySel("payOverlay");
+const pixModal = bySel("pixModal");
+const cardModal = bySel("cardModal");
+const closePixModal = bySel("closePixModal");
+const closeCardModal = bySel("closeCardModal");
+const copyPixKey = bySel("copyPixKey");
+const pixKeyText = bySel("pixKeyText");
+const simulateCardPay = bySel("simulateCardPay");
+const whatsFab = bySel("whatsFab");
+
+// Configurações (atualize para seu negócio)
+const WHATS_NUMBER = "5511995002425"; // substitua por seu número com DDI (ex.: 55 + DDD + número)
+const PIX_KEY = "chavepix@exemplo.com"; // substitua pela sua chave Pix (e-mail, CPF ou aleatória)
+pixKeyText.textContent = PIX_KEY;
 
 // Inicialização
 initCategories();
@@ -81,6 +99,30 @@ function wireEvents() {
     const current = document.documentElement.getAttribute("data-theme") || "dark";
     const next = current === "light" ? "dark" : "light";
     setTheme(next);
+  });
+
+  // Pagamento
+  payPixBtn.addEventListener("click", () => openModal(pixModal, true));
+  payCardBtn.addEventListener("click", () => openModal(cardModal, true));
+  closePixModal.addEventListener("click", () => openModal(pixModal, false));
+  closeCardModal.addEventListener("click", () => openModal(cardModal, false));
+  payOverlay.addEventListener("click", () => { openModal(pixModal, false); openModal(cardModal, false); });
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape") { openModal(pixModal, false); openModal(cardModal, false); } });
+  copyPixKey.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(PIX_KEY); showToast("Chave Pix copiada!"); }
+    catch { showToast("Não foi possível copiar. Copie manualmente."); }
+  });
+  simulateCardPay.addEventListener("click", () => {
+    showToast("Pagamento de cartão simulado.");
+  });
+
+  // WhatsApp
+  whatsCartBtn.addEventListener("click", () => {
+    const msg = buildCartMessage();
+    openWhatsApp(msg);
+  });
+  whatsFab.addEventListener("click", () => {
+    openWhatsApp("Olá! Gostaria de informações sobre produtos do catálogo.");
   });
 }
 
@@ -221,6 +263,11 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove("show"), 1500);
 }
 
+function openModal(modalEl, open) {
+  modalEl.setAttribute("aria-hidden", String(!open));
+  payOverlay.hidden = !open;
+}
+
 function saveCart() {
   localStorage.setItem("mini_cart", JSON.stringify(state.carrinho));
 }
@@ -249,4 +296,24 @@ function loadTheme() {
   if (saved === "light" || saved === "dark") return saved;
   const mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)");
   return mq && mq.matches ? "light" : "dark";
+}
+
+// WhatsApp helpers
+function buildCartMessage() {
+  const ids = Object.keys(state.carrinho).map(Number);
+  const items = ids.map((id) => {
+    const prod = produtos.find((p) => p.id === id);
+    return prod ? { ...prod, qty: state.carrinho[id] } : null;
+  }).filter(Boolean);
+  if (!items.length) return "Olá! Gostaria de informações sobre produtos do catálogo.";
+  const subtotal = items.reduce((acc, it) => acc + it.preco * it.qty, 0);
+  const frete = subtotal >= 200 ? 0 : 19.9;
+  const total = subtotal + frete;
+  const linhas = items.map((it) => `• ${it.nome} x${it.qty} — ${formatBRL(it.preco * it.qty)}`).join("%0A");
+  const msg = `Olá! Gostaria de finalizar um pedido:%0A${linhas}%0A%0ATotal: ${formatBRL(total)} (inclui frete: ${formatBRL(frete)})`;
+  return msg;
+}
+function openWhatsApp(message) {
+  const url = `https://wa.me/${WHATS_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
 }
