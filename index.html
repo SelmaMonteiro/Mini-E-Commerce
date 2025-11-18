@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mini E-commerce</title>
+    <meta name="description" content="Catálogo de produtos com carrinho simulado" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">🛍️</span>
+        <h1>Mini E-commerce</h1>
+      </div>
+      <div class="controls" role="region" aria-label="Controles de catálogo">
+        <label class="sr-only" for="searchInput">Buscar produtos</label>
+        <input id="searchInput" type="search" placeholder="Buscar produtos..." autocomplete="off" />
+
+        <label class="sr-only" for="categorySelect">Categoria</label>
+        <select id="categorySelect" aria-label="Filtrar por categoria">
+          <option value="">Todas as categorias</option>
+        </select>
+
+        <label class="sr-only" for="sortSelect">Ordenar</label>
+        <select id="sortSelect" aria-label="Ordenar">
+          <option value="popular">Mais vendidos</option>
+          <option value="price_asc">Preço: menor → maior</option>
+          <option value="price_desc">Preço: maior → menor</option>
+          <option value="rating">Avaliação</option>
+        </select>
+
+        <button id="cartButton" aria-controls="cartDrawer" aria-expanded="false" class="cart-button">
+          🛒 Carrinho <span id="cartCount" class="badge">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="content" class="container">
+      <section aria-live="polite" aria-busy="false">
+        <div id="productGrid" class="grid" aria-label="Lista de produtos"></div>
+      </section>
+    </main>
+
+    <div id="drawerOverlay" class="overlay" hidden></div>
+    <aside id="cartDrawer" class="drawer" aria-label="Seu carrinho" aria-hidden="true">
+      <header class="drawer-header">
+        <h2>Seu carrinho</h2>
+        <button id="closeDrawer" class="icon-btn" aria-label="Fechar carrinho">✖</button>
+      </header>
+      <div class="drawer-body">
+        <ul id="cartItems" class="cart-items" aria-label="Itens do carrinho"></ul>
+        <div class="summary">
+          <div class="row">
+            <span>Subtotal</span>
+            <strong id="cartSubtotal">R$ 0,00</strong>
+          </div>
+          <div class="row">
+            <span>Frete</span>
+            <strong id="cartFrete">R$ 0,00</strong>
+          </div>
+          <div class="row total">
+            <span>Total</span>
+            <strong id="cartTotal">R$ 0,00</strong>
+          </div>
+          <button id="checkoutBtn" class="primary" disabled>Finalizar compra (simulado)</button>
+          <p class="hint">Pagamento por Pix e cartão · Entrega rápida · Devolução fácil</p>
+        </div>
+      </div>
+    </aside>
+
+    <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+
+    <footer class="footer">
+      <small>© 2025 Mini E-commerce · Construído com HTML, CSS e JavaScript</small>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
