@@ -30,6 +30,7 @@ const searchInput = bySel("searchInput");
 const categorySelect = bySel("categorySelect");
 const sortSelect = bySel("sortSelect");
 const cartButton = bySel("cartButton");
+const themeToggle = bySel("themeToggle");
 const cartCount = bySel("cartCount");
 const cartDrawer = bySel("cartDrawer");
 const closeDrawer = bySel("closeDrawer");
@@ -43,6 +44,7 @@ const toast = bySel("toast");
 
 // Inicialização
 initCategories();
+applyInitialTheme();
 render();
 wireEvents();
 
@@ -72,6 +74,13 @@ function wireEvents() {
 
   checkoutBtn.addEventListener("click", () => {
     showToast("Checkout simulado! Integre pagamentos quando desejar.");
+  });
+
+  // Tema
+  themeToggle.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme") || "dark";
+    const next = current === "light" ? "dark" : "light";
+    setTheme(next);
   });
 }
 
@@ -138,6 +147,9 @@ function addToCart(id) {
   saveCart();
   updateCartUI();
   showToast("Produto adicionado ao carrinho.");
+  // animação de badge
+  cartCount.classList.add("bump");
+  setTimeout(() => cartCount.classList.remove("bump"), 280);
 }
 function removeFromCart(id) {
   delete state.carrinho[id];
@@ -217,4 +229,24 @@ function loadCart() {
     const raw = localStorage.getItem("mini_cart");
     return raw ? JSON.parse(raw) : {};
   } catch { return {}; }
+}
+
+// Tema
+function applyInitialTheme() {
+  const t = loadTheme();
+  setTheme(t);
+}
+function setTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  localStorage.setItem("theme", t);
+  const isLight = t === "light";
+  themeToggle.textContent = isLight ? "☀️" : "🌙";
+  themeToggle.setAttribute("aria-label", isLight ? "Alternar para tema escuro" : "Alternar para tema claro");
+  themeToggle.setAttribute("aria-pressed", String(isLight));
+}
+function loadTheme() {
+  const saved = localStorage.getItem("theme");
+  if (saved === "light" || saved === "dark") return saved;
+  const mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)");
+  return mq && mq.matches ? "light" : "dark";
 }

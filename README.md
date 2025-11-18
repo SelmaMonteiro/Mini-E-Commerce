@@ -8,6 +8,8 @@ Catálogo de produtos com carrinho simulado, construído em **HTML, CSS e JavaSc
 - Carrinho com adicionar/remover/quantidade, cálculo de subtotal, frete e total
 - Persistência de carrinho em `localStorage`
 - Layout moderno, responsivo e acessível (ARIA, `aria-live`, contraste)
+- Tema claro/escuro com toggle e respeito ao `prefers-color-scheme`
+- Microinterações: animações suaves em botões/cards, toast com slide e badge do carrinho
 
 ## Executar localmente
 1. Baixe/clique em "Code" → "Download ZIP" ou clone este repositório.
@@ -35,7 +37,7 @@ Opção B — manual
 
 ## Próximos incrementos (opcional)
 - Wishlist/favoritos, comparador de produtos, avaliações com comentários
-- Dark mode automático (prefers-color-scheme) e animações de microinteração
+- Internacionalização (i18n) e formatação de moeda multi-país
 - Integração de gateway de pagamento (Mercado Pago/Pagar.me/Pix), backend FaaS
 - Testes de acessibilidade (Lighthouse) e métricas de performance (Core Web Vitals)
 
